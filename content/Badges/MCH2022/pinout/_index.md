@@ -63,10 +63,83 @@ Addon connector following the [SHITTY ADD-ON V1.69BIS standard](https://hackaday
 | 36 (SENSOR_VP) | Input                                 | Interrupt from position sensor (BNO055)              |                                                                                               |
 | 39 (SENSOR_VN) | Input                                 | Interrupt from ICE40 FPGA                            |                                                                                               |
 
-### ICE40 FPGA
-
-to be done
-
 ### RP2040
 
-to be done
+| RP2040 GPIO | Direction | Pull | Function | Description                            |
+|-------------|-----------|------|----------|----------------------------------------|
+| 0           | Output    |      | UART0 TX | ESP32 UART                             |
+| 1           | Input     |      | UART0 RX | ESP32 UART                             |
+| 2           | Both      |      | I2C1 SDA | I2C bus data (RP2040 is in slave mode) |
+| 3           | Input     |      | I2C1 SCL | I2C bus clock                          |
+| 4           | Input     | Up   | GPIO     | Button: MENU                           |
+| 5           | Input     | Up   | GPIO     | Button: HOME                           |
+| 6           | Input     | Up   | GPIO     | Button: ACCEPT                         |
+| 7           | Input     | Up   | GPIO     | Button: Joystick A                     |
+| 8           | Input     | Up   | GPIO     | Button: Joystick B                     |
+| 9           | Input     | Up   | GPIO     | Button: Joystick C                     |
+| 10          | Input     | Up   | GPIO     | Button: Joystick D                     |
+| 11          | Input     | Up   | GPIO     | Button: Joystick E                     |
+| 12          | Both      |      | GPIO     | ESP32 bootloader mode¹                 |
+| 13          | Output    |      | GPIO     | ESP32 enable                           |
+| 14          | Both      |      | GPIO     | ESP32 interrupt¹                       |
+| 15          | Output    |      | PWM      | LCD backlight brightness               |
+| 16          | Both      |      | GPIO     | Available next to prototyping area     |
+| 17          | Both      |      | GPIO     | Available next to prototyping area     |
+| 18          | Both      |      | GPIO     | SAO GPIO1                              |
+| 19          | Both      |      | GPIO     | SAO GPIO2                              |
+| 20          | Input     |      | GPIO     | FPGA done                              |
+| 21          | Output    |      | GPIO     | FPGA reset                             |
+| 22          | Input     | Up   | GPIO     | Button: START                          |
+| 23          | Input     |      | GPIO     | LiPo charger state                     |
+| 24          | Output    |      | UART1 TX | FPGA UART                              |
+| 25          | Input     |      | UART1 RX | FPGA UART                              |
+| 26          | Input     | Up   | GPIO     | Button: BACK                           |
+| 27          | Output    |      | GPIO     | Infrared LED                           |
+| 28          | Input     |      | ADC      | Voltage measurement: USB input         |
+| 29          | Input     |      | ADC      | Voltage measurement: Battery           |
+
+¹: Set to input normally and force low to activate
+
+# ICE40 FPGA
+
+| ICE40 pin | ICE40 GPIO      | Direction | Description         |
+|-----------|-----------------|-----------|---------------------|
+| 2         | IOB_6a          | Both      | PMOD pin 4          |
+| 3         | IOB_8a          | Both      | PMOD pin 3          |
+| 4         | IOB_9b          | Both      | PMOD pin 9          |
+| 6         | IOB_13b         | Input     | UART RX             |
+| 9         | IOB_16a         | Output    | UART TX             |
+| 10        | IOB_18a         | Output    | Interrupt           |
+| 11        | IOB_20a         | Output    | LCD register select |
+| 12        | IOB_22b         | Both      | RAM SPI D2          |
+| 13        | IOB_24a         | Both      | RAM SPI D1          |
+| 14        | IOB_32a_SPI_SO  | Output    | SPI MISO            |
+| 15        | IOB_34b_SPI_SCK | Input     | SPI SCK             |
+| 16        | IOB_35b_SPI_SS  | Input     | SPI SS              |
+| 17        | IOB_33b_SPI_SI  | Input     | SPI MOSI            |
+| 18        | IOB_31b         | Output    | RAM SPI CS          |
+| 19        | IOB_29b         | Output    | RAM SPI SCK         |
+| 20        | IOB_25b_G3      | Both      | RAM SPI D3          |
+| 21        | IOB_23b         | Both      | RAM SPI D0          |
+| 23        | IOT_37a         | Output    | LCD write           |
+| 25        | IOT_36b         | Input     | LCD frame sync      |
+| 26        | IOT_39a         | Output    | LCD data 0          |
+| 27        | IOT_38a         | Output    | LCD data 1          |
+| 28        | IOT_41a         | Output    | LCD CS              |
+| 31        | IOT_42b         | Output    | LCD data 2          |
+| 32        | IOT_43a         | Output    | LCD data 3          |
+| 34        | IOT_44b         | Output    | LCD data 4          |
+| 35        | IOT_46b_G0      | Input     | 12MHz clock         |
+| 36        | IOT_48b         | Output    | LCD reset           |
+| 37        | IOT_45a_G1      | Output    | LCD data 5          |
+| 38        | IOT_50b         | Output    | LCD data 6          |
+| 39        | RGB0            | Output    | LED                 |
+| 40        | RGB1            | Output    | LED                 |
+| 41        | RGB2            | Output    | LED                 |
+| 42        | IOT_51a         | Output    | LCD data 7          |
+| 43        | IOT_49a         | Output    | LCD mode            |
+| 44        | IOB_3b_G6       | Both      | PMOD pin 7          |
+| 45        | IOB_5b          | Both      | PMOD pin 8          |
+| 46        | IOB_0a          | Both      | PMOD pin 10         |
+| 47        | IOB_2a          | Both      | PMOD pin 1          |
+| 48        | IOB_4a          | Both      | PMOD pin 2          |
